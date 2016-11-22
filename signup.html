@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>Rad Pages</title>
+<title>Sign Up</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -22,28 +22,102 @@ body, html {height: 100%}
   </div>
   <div class="w3-display-middle">
     <form class="w3-container">
-		<label class="w3-label w3-validate w3-text-white">Username</label>
-		<input class="w3-input" type="text">
-		<label class="w3-label w3-validate w3-text-white">Password</label>
-		<input class="w3-input" type="Password">
-		<label class="w3-label w3-validate w3-text-white">Password Again</label>
-		<input class="w3-input" type="Password Part 2">
-		<label class="w3-label w3-validate w3-text-white">Email Address</label>
-		<input class="w3-input" type="email">
-		<label class="w3-label w3-validate w3-text-white">First name</label>
-		<input class="w3-input" type="text">
-		<label class="w3-label w3-validate w3-text-white">Last name</label>
-		<input class="w3-input" type="text w3-text-white">
-		<label class="w3-label w3-validate w3-text-white">Job or interest</label>
-		<input class="w3-input" type="text w3-text-white">
+    	<label class="w3-label w3-text-white">Email Address</label>
+		<input class="w3-input" type="email" id="mail" onkeyup="missingEmail(); return false;">
+		<label class="w3-label w3-text-white">Username</label>
+		<input class="w3-input" type="text" id="usr" onkeyup="missingUsr(); return false;">
+		<label class="w3-label w3-text-white">Password</label>
+		<input class="w3-input" type="Password" name="password" id="pass1" onkeyup="passAreSame(); return false;">
+		<label class="w3-label w3-text-white">Re-enter Password</label>
+		<input class="w3-input" type="Password" name="passwordReenter" id="pass2" onkeyup="passAreSame(); return false;">
 		
 		<p>
-  			<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-purple" href="#">sign up</a>
+			<span id="missingMail" class="missingMail" style="background-color:black;"></span>
+		</p>
+		<p>
+			<span id="missingUsr" class="missingUsr" style="background-color:black;"></span>
+		</p>
+		<p>
+			<span id="passMessage" class="passMessage" style="background-color:black;"></span>
+		</p>
+		
+		
+		<p>
+  			<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-purple" href="#" id="signButton">sign up</a>
   		</p>
 		
 		</form>
   </div>
 </div>
+
+<script>
+// Instantiate some colors
+var badColor = "#ff6666";
+
+// Email field checker
+function missingEmail(){
+	// Store user name field object into a variable
+	var mail = document.getElementById('mail');
+	// Store the confirmation message object for the username
+	var message = document.getElementById('missingMail');
+	// Check to see if the user has entered a username
+	if (mail.value == "") {
+		message.style.color = badColor;
+    	message.innerHTML = "You Forgot an Email Address";
+    }
+    else {
+    	message.innerHTML = "";
+    }
+}
+
+// Username field checker
+function missingUsr(){
+	// Store user name field object into a variable
+	var usr = document.getElementById('usr');
+	// Store the confirmation message object for the username
+	var message = document.getElementById('missingUsr');
+	// Check to see if the user has entered a username
+	if (usr.value == "") {
+		message.style.color = badColor;
+    	message.innerHTML = "You Forgot a Username";
+    	document.getElementById("signButton").disabled = true;
+    }
+    else {
+    	message.innerHTML = "";
+    }
+}
+
+// Password sameness checker
+function passAreSame() {
+	// Store the password field objects into variables ...
+    var pass1 = document.getElementById('pass1');
+    var pass2 = document.getElementById('pass2');
+    // Store the Confirmation Message Object for the password
+    var message = document.getElementById('passMessage');
+    // Compare the values in the password field 
+    // and the confirmation field
+    if(pass1.value == "" && pass2.value == "") {
+    	// if the user hasn't entered a password let them know
+    	message.style.color = badColor;
+        message.innerHTML = "You Forgot A Password"
+        document.getElementById("signButton").disabled = true;
+    }
+    else if(pass1.value == pass2.value) {
+        // The passwords match. 
+        // Set the color to the good color and inform
+        // the user that they have entered the correct password 
+        message.innerHTML = ""
+    }
+    else {
+        // The passwords do not match.
+        // Set the color to the bad color and
+        // notify the user.
+        message.style.color = badColor;
+        message.innerHTML = "Passwords Do Not Match!"
+        document.getElementById("signButton").disabled = true;
+    }	
+}
+</script>
 
 </body>
 </html>
