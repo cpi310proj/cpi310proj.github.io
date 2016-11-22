@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<title>My Digits and all that</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="w3.css">
+<<<<<<< HEAD
+<link rel="stylesheet" href="w3-theme-black.css">
+=======
+>>>>>>> 80aaad78245fb86761e75dbb40cdf68aa057b1ce
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+</style>
+<body class="w3-theme-l5">
+
+<!-- Navbar -->
+<div class="w3-top">
+ <ul class="w3-navbar w3-theme-d2 w3-left-align w3-large">
+  <li class="w3-hide-medium w3-hide-large w3-opennav w3-right">
+    <a class="w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+  </li>
+  <li><a href="ProfilePage.html" class="w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>RAD PAGES &#x270C</a></li>
+  <li class="w3-hide-small"><a href="#" class="w3-padding-large w3-hover-white" title="'Sup world?"><i class="fa fa-globe"></i></a></li>
+  <li class="w3-hide-small"><a href="#" class="w3-padding-large w3-hover-white" title="Change up ur Settings"><i class="fa fa-user"></i></a></li>
+  <li class="w3-hide-small w3-right"><a href="#" class="w3-padding-large w3-hover-white" title="My Rad Page"><img src="/w3images/avatar2.png" class="w3-circle" style="height:25px;width:25px" alt="Avatar"></a></li>
+ </ul>
+</div>
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:51px">
+  <ul class="w3-navbar w3-left-align w3-large w3-theme">
+    <li><a class="w3-padding-large" href="#">Fresh Posts On The Word Stage</a></li>
+    <li><a class="w3-padding-large" href="#">Mess with your profile</a></li>
+    <li><a class="w3-padding-large" href="ProfilePage.html">My Rad Page</a></li>
+  </ul>
+</div>
+
+<!-- Page Container -->
+<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
+  
+<!-- End Page Container -->
+</div>
+<br>
+
+<!-- Footer -->
+<footer class="w3-container w3-theme-d3 w3-padding-16">
+  <h5>2K16 Rad Pages</h5>
+</footer>
+
+ 
+<script>
+// Accordion
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-theme-d1";
+    } else {
+        x.className = x.className.replace("w3-show", "");
+        x.previousElementSibling.className =
+        x.previousElementSibling.className.replace(" w3-theme-d1", "");
+    }
+}
+
+// Used to toggle the menu on smaller screens when clicking on the menu button
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
+
+</body>
+</html>
+
+
