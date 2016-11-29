@@ -42,7 +42,7 @@ body, html {height: 100%}
 			<input class="w3-input" type="text" id="mail">
 
 			<label>Password</label>
-			<input class="w3-input" type="text" id="password">
+			<input class="w3-input" type="password" id="password">
 
 			<p>
   				<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-teal" onclick=login() href="#">sign in</a>
@@ -65,7 +65,7 @@ function login() {
   firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
-    window.location.href = "https://cpi310proj.github.io/index";
+    window.location.href = "https://cpi310proj.github.io/ProfilePage";
 
   } else {
     // No user is signed in.
