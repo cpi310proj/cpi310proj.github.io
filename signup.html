@@ -38,8 +38,6 @@ body, html {height: 100%}
     <form class="w3-container">
     	<label class="w3-label w3-text-white">Email Address</label>
 		<input class="w3-input" type="email" id="mail" onkeyup="missingEmail(); return false;">
-		<label class="w3-label w3-text-white">Username</label>
-		<input class="w3-input" type="text" id="usr" onkeyup="missingUsr(); return false;">
 		<label class="w3-label w3-text-white">Password</label>
 		<input class="w3-input" type="Password" name="password" id="pass1" onkeyup="passAreSame(); return false;">
 		<label class="w3-label w3-text-white">Re-enter Password</label>
@@ -78,23 +76,6 @@ function missingEmail(){
 	if (mail.value == "") {
 		message.style.color = badColor;
     	message.innerHTML = "You Forgot an Email Address";
-    }
-    else {
-    	message.innerHTML = "";
-    }
-}
-
-// Username field checker
-function missingUsr(){
-	// Store user name field object into a variable
-	var usr = document.getElementById('usr');
-	// Store the confirmation message object for the username
-	var message = document.getElementById('missingUsr');
-	// Check to see if the user has entered a username
-	if (usr.value == "") {
-		message.style.color = badColor;
-    	message.innerHTML = "You Forgot a Username";
-    	document.getElementById("signButton").disabled = true;
     }
     else {
     	message.innerHTML = "";
