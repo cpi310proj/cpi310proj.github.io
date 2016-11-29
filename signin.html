@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html>
 <title>Rad Pages</title>
+
+<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBybzQ7A9ivNxUvOI03rbFXOS6UVnEAszk",
+    authDomain: "test-1cc17.firebaseapp.com",
+    databaseURL: "https://test-1cc17.firebaseio.com",
+    storageBucket: "test-1cc17.appspot.com",
+    messagingSenderId: "376566074849"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -23,18 +38,52 @@ body, html {height: 100%}
   	<div class="w3-display-middle">
 		<form class="w3-container">
 
-			<label>Username</label>
-			<input class="w3-input" type="text">
+			<label>Email</label>
+			<input class="w3-input" type="text" id="mail">
 
 			<label>Password</label>
-			<input class="w3-input" type="text">
+			<input class="w3-input" type="text" id="password">
 
 			<p>
-  				<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-teal" href="#">sign in</a>
+  				<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-teal" onclick=login() href="#">sign in</a>
   			</p>
 		</form>
   </div>
 </div>
 
 </body>
+
+<script>
+function login() {
+  var email = document.getElementById("mail").value;
+  var password = document.getElementById("password").value;
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }, function(error) {
+    // An error happened.
+  });
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    window.location.href = "https://cpi310proj.github.io/index";
+
+  } else {
+    // No user is signed in.
+  }
+});
+  firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if (errorCode === 'auth/wrong-password' || errorCode === 'auth/invalid-email' ||
+         errorCode === 'auth/user-not-found' || errorCode === 'auth/user-disabled') {
+        alert(errorMessage);
+    }
+
+      // ...
+  });
+}
+</script>
+
+
 </html>

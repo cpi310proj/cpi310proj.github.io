@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html>
 <title>Sign Up</title>
+<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBybzQ7A9ivNxUvOI03rbFXOS6UVnEAszk",
+    authDomain: "test-1cc17.firebaseapp.com",
+    databaseURL: "https://test-1cc17.firebaseio.com",
+    storageBucket: "test-1cc17.appspot.com",
+    messagingSenderId: "376566074849"
+  };
+  firebase.initializeApp(config);
+
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -30,7 +44,7 @@ body, html {height: 100%}
 		<input class="w3-input" type="Password" name="password" id="pass1" onkeyup="passAreSame(); return false;">
 		<label class="w3-label w3-text-white">Re-enter Password</label>
 		<input class="w3-input" type="Password" name="passwordReenter" id="pass2" onkeyup="passAreSame(); return false;">
-		
+
 		<p>
 			<span id="missingMail" class="missingMail" style="background-color:black;"></span>
 		</p>
@@ -40,12 +54,12 @@ body, html {height: 100%}
 		<p>
 			<span id="passMessage" class="passMessage" style="background-color:black;"></span>
 		</p>
-		
-		
+
+
 		<p>
-  			<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-purple" href="#" id="signButton">sign up</a>
+  			<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-purple" onclick="create()" href="AccountSettings.html" id="signButton">sign up</a>
   		</p>
-		
+
 		</form>
   </div>
 </div>
@@ -94,7 +108,7 @@ function passAreSame() {
     var pass2 = document.getElementById('pass2');
     // Store the Confirmation Message Object for the password
     var message = document.getElementById('passMessage');
-    // Compare the values in the password field 
+    // Compare the values in the password field
     // and the confirmation field
     if(pass1.value == "" && pass2.value == "") {
     	// if the user hasn't entered a password let them know
@@ -103,9 +117,9 @@ function passAreSame() {
         document.getElementById("signButton").disabled = true;
     }
     else if(pass1.value == pass2.value) {
-        // The passwords match. 
+        // The passwords match.
         // Set the color to the good color and inform
-        // the user that they have entered the correct password 
+        // the user that they have entered the correct password
         message.innerHTML = ""
     }
     else {
@@ -115,8 +129,34 @@ function passAreSame() {
         message.style.color = badColor;
         message.innerHTML = "Passwords Do Not Match!"
         document.getElementById("signButton").disabled = true;
-    }	
+    }
 }
+</script>
+
+<script>
+function create() {
+  // alert("hi");
+  // var name = document.getElementById("name-create").value;
+  var password = document.getElementById("pass1").value;
+  var email = document.getElementById("mail").value;
+  console.log(password);
+  console.log(email);
+  firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    if (errorCode == 'auth/weak-password' || errorCode == 'auth/email-already-in-use' || errorCode == 'auth/invalid-email' ||
+        errorCode == 'auth/operation-not-allowed') {
+          alert(errorMessage);
+    }
+    else {
+        window.location.href = "https://cpi310proj.github.io/AccountSettings";
+    }
+    // ...
+    });
+    // $('#signIn').click();
+    // window.location.href = "https://cpi310proj.github.io/index";
+  }
 </script>
 
 </body>
