@@ -150,8 +150,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <script>
 function onload() {
 
-  var user = firebase.auth().currentUser;  
-  if(user) {
+  firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
     user.updateProfile({
       displayName: "Jane Q. User",
       photoURL: "https://example.com/jane-q-user/profile.jpg"
@@ -160,11 +160,10 @@ function onload() {
     }, function(error) {
       alert("error");
     });
-  }
-  else {
+  } else {
     alert("not logged in");
   }
-
+});  
 }
 function myFunction(id) {
     var x = document.getElementById(id);
