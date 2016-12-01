@@ -1,18 +1,29 @@
 <!DOCTYPE html>
 <html>
 <title>My Info</title>
+
+<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBybzQ7A9ivNxUvOI03rbFXOS6UVnEAszk",
+    authDomain: "test-1cc17.firebaseapp.com",
+    databaseURL: "https://test-1cc17.firebaseio.com",
+    storageBucket: "test-1cc17.appspot.com",
+    messagingSenderId: "376566074849"
+  };
+  firebase.initializeApp(config);
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="w3.css">
-<<<<<<< HEAD
 <link rel="stylesheet" href="w3-theme-black.css">
-=======
->>>>>>> 80aaad78245fb86761e75dbb40cdf68aa057b1ce
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
-<body class="w3-theme-l5">
+<body onload="onload()" class="w3-theme-l5">
 
 <!-- Navbar -->
 <div class="w3-top">
@@ -37,7 +48,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <!-- Page Container -->
 <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
-  
+
 <div class="w3-row">
 	<!-- Profile -->
       <div class="w3-card-2 w3-round w3-white">
@@ -72,38 +83,38 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <p>
       	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-purple" href="#">update</a>
       </p>
-      
-      
+
+
     </form>
   </div>
-  
+
   <div class="w3-card-4 w3-third">
   	<div class="w3-container w3-pink w3-wide">
       <h3>screen name</h3>
     </div>
-    
+
     <form class="w3-container">
-      
+
       <p>
       <input class="w3-input" type="text">
       <label>screen name</label>
       </p>
-      
+
       <p>
       	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-pink" href="#">update screen name</a>
       </p>
-      
+
     </form>
-    
+
   </div>
-  
+
   <div class="w3-card-4 w3-third">
   	<div class="w3-container w3-teal w3-wide">
       <h3>about you</h3>
     </div>
-    
+
     <form class="w3-container">
-      
+
       <p>
       <input class="w3-input" type="text">
       <label>occupation</label>
@@ -119,13 +130,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <p>
       	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-teal" href="#">update who you are</a>
       </p>
-      
+
     </form>
-    
+
   </div>
-  
+
 </div>
-  
+
 <!-- End Page Container -->
 </div>
 <br>
@@ -135,9 +146,26 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <h5>2K16 Rad Pages</h5>
 </footer>
 
- 
+
 <script>
-// Accordion
+function onload() {
+
+  var user = firebase.auth().currentUser;  
+  if(user) {
+    user.updateProfile({
+      displayName: "Jane Q. User",
+      photoURL: "https://example.com/jane-q-user/profile.jpg"
+    }).then(function() {
+      alert("uhh");
+    }, function(error) {
+      alert("error");
+    });
+  }
+  else {
+    alert("not logged in");
+  }
+
+}
 function myFunction(id) {
     var x = document.getElementById(id);
     if (x.className.indexOf("w3-show") == -1) {
@@ -163,5 +191,3 @@ function openNav() {
 
 </body>
 </html>
-
-
