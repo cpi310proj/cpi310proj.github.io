@@ -23,7 +23,7 @@
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
-<body class="w3-theme-l5">
+<body onload="onload()" class="w3-theme-l5">
 
 <!-- Navbar -->
 <div class="w3-top">
@@ -55,7 +55,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <!-- Profile -->
       <div class="w3-card-2 w3-round w3-white">
         <div class="w3-container">
-         <h4 class="w3-center">My Profile</h4>
+         <h4 id="screenName" class="w3-center">My Profile</h4>
          <p class="w3-center"><img src="bird.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
          <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
@@ -248,6 +248,26 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <script>
 // Accordion
+
+function onload() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+
+      var displayName = user.displayName;
+      var nameLabel = document.getElementById("screenName");
+
+      if(displayName == null || displayName == "") {
+        nameLabel.value = "My Profile"
+      }
+      else {
+        nameLabel.value = displayName;
+      }
+    } else {
+      alert("not logged in");
+    }
+  });
+}
+
 function myFunction(id) {
     var x = document.getElementById(id);
     if (x.className.indexOf("w3-show") == -1) {

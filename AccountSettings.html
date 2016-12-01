@@ -96,12 +96,12 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <form class="w3-container">
 
       <p>
-      <input class="w3-input" type="text">
+      <input id="newScreenName" class="w3-input" type="text">
       <label>screen name</label>
       </p>
 
       <p>
-      	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-pink" href="#">update screen name</a>
+      	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-pink" onclick="changeScreenName()" href="#">update screen name</a>
       </p>
 
     </form>
@@ -150,21 +150,31 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <script>
 function onload() {
 
-  firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    user.updateProfile({
-      displayName: "Jane Q. User",
-      photoURL: "https://example.com/jane-q-user/profile.jpg"
-    }).then(function() {
-      alert("uhh");
-    }, function(error) {
-      alert("error");
-    });
-  } else {
-    alert("not logged in");
-  }
-});  
+
 }
+
+function changeScreenName() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+
+      var displayName = document.getElementById("newScreenName");
+      if(displayName == "") {
+        alert("Invalid Display Name");
+      }
+
+      user.updateProfile({
+        displayName: displayName,
+      }).then(function() {
+        alert("You are now " + displayName);
+      }, function(error) {
+        alert(error);
+      });
+    } else {
+      alert("not logged in");
+    }
+  });
+}
+
 function myFunction(id) {
     var x = document.getElementById(id);
     if (x.className.indexOf("w3-show") == -1) {
