@@ -155,59 +155,61 @@ function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
 
-      var displayName = user.displayName;
-      var photoUrl = user.photoURL;
       var photoView = document.getElementById("profileImage");
       var nameLabel = document.getElementById("screenName");
       var locationLabel = document.getElementById("locationLabel");
       var jobLabel = document.getElementById("jobLabel");
       var birthdayLabel = document.getElementById("birthdayLabel");
 
-      if(displayName == null || displayName == "") {
-        nameLabel.innerHTML = "My Profile"
-      }
-      else {
-        nameLabel.innerHTML = displayName;
-      }
+      firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
+        var location = snapshot.val().location;
+        var occupation = snapshot.val().occupation;
+        var birthday = snapshot.val().birthday;
+        var displayName = snapshot.val().displayName;
+        var photoUrl = snapshot.val().photoURL;
 
-      photoView.src = photoUrl;
 
-    } else {
+        if(displayName == null || displayName == "") {
+          nameLabel.innerHTML = "My Profile"
+        }
+        else {
+          nameLabel.innerHTML = displayName;
+        }
+
+        photoView.src = photoUrl;
+
+        var locationNode;
+        if(location == null || location == "") {
+          locationNode = document.createTextNode(" Set your location");
+        }
+        else {
+          locationNode = document.createTextNode(location);
+        }
+        locationLabel.appendChild(locationNode);
+
+        var jobNode;
+        if(occupation == null || occupation == "") {
+          jobNode = document.createTextNode(" Set your occupation");
+        }
+        else {
+          jobNode = document.createTextNode(occupation);
+        }
+        jobLabel.appendChild(jobNode);
+
+        var birthdayNode;
+        if(birthday == null || birthday == "") {
+          birthdayNode = document.createTextNode(" Set your birthday");
+        }
+        else {
+          birthdayNode = document.createTextNode(birthday);
+        }
+        birthdayLabel.appendChild(birthdayNode);
+      });
+    }
+    else {
       alert("not logged in");
     }
 
-    firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
-      var location = snapshot.val().location;
-      var occupation = snapshot.val().occupation;
-      var birthday = snapshot.val().birthday;
-
-      var locationNode;
-      if(location == null || location == "") {
-        locationNode = document.createTextNode(" Set your location");
-      }
-      else {
-        locationNode = document.createTextNode(location);
-      }
-      locationLabel.appendChild(locationNode);
-
-      var jobNode;
-      if(occupation == null || occupation == "") {
-        jobNode = document.createTextNode(" Set your occupation");
-      }
-      else {
-        jobNode = document.createTextNode(occupation);
-      }
-      jobLabel.appendChild(jobNode);
-
-      var birthdayNode;
-      if(birthday == null || birthday == "") {
-        birthdayNode = document.createTextNode(" Set your birthday");
-      }
-      else {
-        birthdayNode = document.createTextNode(birthday);
-      }
-      birthdayLabel.appendChild(birthdayNode);
-    });
   });
 
 }
@@ -258,15 +260,15 @@ function changeScreenName() {
       var name = document.getElementById("newScreenName").value;
       if(name == "") {
         alert("Invalid Display Name");
+        return;
       }
 
-      user.updateProfile({
-        displayName: name,
-      }).then(function() {
-          window.location.assign("https://cpi310proj.github.io/AccountSettings");
-      }, function(error) {
-        alert(error);
-      });
+      var updates = {};
+      var ref = "users/" + user.uid + "/";
+      updates[ref + "displayName"] = name;
+
+      firebase.database().ref().update(updates);
+      window.location.assign("https://cpi310proj.github.io/AccountSettings");
     } else {
       alert("not logged in");
     }
@@ -283,24 +285,16 @@ function updateProfile() {
       var ref = firebase.storage().ref().child(user.uid);
       ref.put(file).then(function(snapshot) {
         var url = snapshot.downloadURL;
-        console.log(url);
-        user.updateProfile({
-          photoURL: url
-        }).then(function() {
-          window.location.assign("https://cpi310proj.github.io/AccountSettings");
-        }, function(error) {
-          alert(error);
-        });
+        var updates = {};
+        var ref = "users/" + user.uid + "/";
+        updates[ref + "photoURL"] = url;
+
+        firebase.database().ref().update(updates);
+        window.location.assign("https://cpi310proj.github.io/AccountSettings");
       });
 
     }
   });
-
-    // var reader = new FileReader();
-	  // reader.onload = function(e){
-    //   alert(reader.result);
-	  // };
-	  // reader.readAsDataURL(file);
 }
 
 function myFunction(id) {

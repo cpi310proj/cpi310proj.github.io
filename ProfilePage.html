@@ -195,15 +195,26 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <script id="post-template" type="text/x-handlebars-template">
 <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-  <img src="{{userImg}}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
   <span class="w3-right w3-opacity"></span>
-  <h4></h4><br>
+  <h4>{{dateString}}</h4><br>
   <hr class="w3-clear">
   <p>{{content}}</p>
   <button type="button" class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
   <p class="w3-right w3-margin-left">{{likeCount}}</p>
 </div>
 </script>
+
+<script id="post-template-liked" type="text/x-handlebars-template">
+<div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
+  <span class="w3-right w3-opacity"></span>
+  <h4>{{dateString}}</h4><br>
+  <hr class="w3-clear">
+  <p>{{content}}</p>
+  <button type="button" disabled class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
+  <p class="w3-right w3-margin-left">{{likeCount}}</p>
+</div>
+</script>
+
 
 
 <script>
@@ -286,8 +297,7 @@ function newPost() {
           updates[userRef + "timestamp"] = time;
           updates[userRef + "liked"] = false;
           updates[postRef + "text"] = text;
-          updates[postRef + "name"] = user.displayName;
-          updates[postRef + "photo"] = user.photoURL;
+          updates[postRef + "posterId"] = user.uid;
           updates[postRef + "likes"] = 0;
           updates[postRef + "timestamp"] = time;
 
@@ -306,20 +316,30 @@ function loadPosts() {
     if (user) {
       var postRef = firebase.database().ref('users/' + user.uid + "/posts/").orderByChild('timestamp');
       postRef.on('child_added', function(data) {
-        generatePostHtml(data.key, data.val().liked, user.photoURL);
+        generatePostHtml(data.key, data.val().liked, data.val().timestamp);
       });
     }
   });
 }
 
-function generatePostHtml(postId, liked, photo) {
+function generatePostHtml(postId, isLiked, timestamp) {
 
   firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
     var likes = snapshot.val().likes;
-    var source = document.getElementById("post-template").innerHTML;
+    var date = new Date(timestamp);
+    var time = date.getTime();
+    date = time.getDate() + "/" + time.getMonth() + "/" + time.getYear();
+    var source;
+    if(isLiked) {
+      source = document.getElementById("post-template-liked").innerHTML;
+    }
+    else {
+      source = document.getElementById("post-template").innerHTML;
+    }
+
     var template = Handlebars.compile(source);
-    var context = {content: text, likeCount: likes, userImg: photo};
+    var context = {content: text, likeCount: likes, dateString: date};
 
     var parent = document.getElementById("midColumn");
     parent.insertAdjacentHTML('beforeend', template(context));
