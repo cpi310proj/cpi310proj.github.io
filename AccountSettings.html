@@ -187,7 +187,7 @@ function updateAboutMe() {
         if(birth != "") {
           updates[ref + "birthday"] = birth;
         }
-        firebase.database.ref().update(updates);
+        firebase.database().ref().update(updates);
 
       } else {
         alert("not logged in");
