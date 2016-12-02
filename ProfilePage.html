@@ -286,7 +286,8 @@ function newPost() {
           updates[userRef + "timestamp"] = time;
           updates[userRef + "liked"] = false;
           updates[postRef + "text"] = text;
-          updates[postRef + "userId"] = user.uid;
+          updates[postRef + "name"] = user.displayName;
+          updates[postRef + "photo"] = user.photoURL;
           updates[postRef + "likes"] = 0;
           updates[postRef + "timestamp"] = time;
 
@@ -305,21 +306,20 @@ function loadPosts() {
     if (user) {
       var postRef = firebase.database().ref('users/' + user.uid + "/posts/").orderByChild('timestamp');
       postRef.on('child_added', function(data) {
-        generatePostHtml(data.key, data.val().liked, user.uid);
+        generatePostHtml(data.key, data.val().liked, user.photoURL);
       });
     }
   });
 }
 
-function generatePostHtml(postId, liked, userId) {
+function generatePostHtml(postId, liked, photo) {
 
   firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
     var likes = snapshot.val().likes;
     var source = document.getElementById("post-template").innerHTML;
     var template = Handlebars.compile(source);
-    console.log(userId.photoURL);
-    var context = {content: text, likeCount: likes, userImg: userId.photoURL};
+    var context = {content: text, likeCount: likes, userImg: photo};
 
     var parent = document.getElementById("midColumn");
     parent.insertAdjacentHTML('beforeend', template(context));
