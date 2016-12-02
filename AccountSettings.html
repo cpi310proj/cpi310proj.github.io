@@ -56,9 +56,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
          <h4 id="screenName" class="w3-center"></h4>
          <p class="w3-center"><img src="bird.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
-         <p id="jobLabel" class="fa-birthday-cake"></p>
-         <p id="locationLabel"> <i></i></p>
-         <p class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme" id="birthdayLabel"> <i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i></p>
+         <p id="jobLabel"><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i></p>
+         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
+         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
         </div>
       </div>
       <br>
@@ -184,7 +184,8 @@ function onload() {
         jobLabel.innerHTML = " Set your occupation";
       }
       else {
-        jobLabel.innerHTML = " " + occupation;
+        var jobNode = document.createTextNode(occupation);
+        jobLabel.appendChild(jobNode);
       }
 
       if(birthday == null || birthday == "") {
