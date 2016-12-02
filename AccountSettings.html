@@ -131,11 +131,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-teal" onclick="updateAboutMe()" href="#">update who you are</a>
       </p>
 
+
     </form>
 
   </div>
 
 </div>
+<input id="newProfilePic" type="file" name="picture" accept="image/png, image/jpeg"></input>
+<button onclick="updateProfile()">Update Profile Picture</button>
 
 <!-- End Page Container -->
 </div>
@@ -263,6 +266,28 @@ function changeScreenName() {
       alert("not logged in");
     }
   });
+}
+
+function updateProfile() {
+
+  var file = document.querySelector('input[type=file]').files[0];  
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+
+      var ref = firebase.storage().ref();
+      ref.put(file).then(function(snapshot) {
+        console.log('Uploaded a blob or file!');
+      });
+
+    }
+  });
+
+    var reader = new FileReader();
+	  reader.onload = function(e){
+      alert(reader.result);
+	  };
+	  reader.readAsDataURL(file);
 }
 
 function myFunction(id) {
