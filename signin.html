@@ -65,7 +65,6 @@ function login() {
   firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     // User is signed in.
-    // window.location.href = "https://cpi310proj.github.io/ProfilePage";
     window.location.assign("https://cpi310proj.github.io/ProfilePage");
 
   } else {
