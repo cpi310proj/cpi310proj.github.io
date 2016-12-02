@@ -120,11 +120,7 @@ function create() {
   // var name = document.getElementById("name-create").value;
   var password = document.getElementById("pass1").value;
   var email = document.getElementById("mail").value;
-  firebase.auth().signOut().then(function() {
-    // Sign-out successful.
-  }, function(error) {
-    // An error happened.
-  });
+  
   firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
