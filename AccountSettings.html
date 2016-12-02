@@ -175,12 +175,19 @@ function updateAboutMe() {
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        var admin = require("firebase-admin");
-        var db = admin.database();
-        var ref = db.ref("users/" + user.uid);
-        ref.child("occupation").setValue(occ);
-        ref.child("location").setValue(loc);
-        ref.child("birthday").setValue(birth);
+
+        var updates = {};
+        var ref = "users/" + user.uid;
+        if(occ != "") {
+          updates[ref + "occupation"] = occ;
+        }
+        if(loc != "") {
+          updates[ref + "location"] = loc;
+        }
+        if(birth != "") {
+          updates[ref + "birthday"] = birth;
+        }
+        firebase.database.ref().update(updates);
 
       } else {
         alert("not logged in");
