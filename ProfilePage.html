@@ -195,7 +195,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <script id="post-template" type="text/x-handlebars-template">
 <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-  <img src="bird.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+  <img src="{{userImg}}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
   <span class="w3-right w3-opacity"></span>
   <h4></h4><br>
   <hr class="w3-clear">
@@ -286,6 +286,7 @@ function newPost() {
           updates[userRef + "timestamp"] = time;
           updates[userRef + "liked"] = false;
           updates[postRef + "text"] = text;
+          updates[postRef + "userId"] = user.uid;
           updates[postRef + "likes"] = 0;
           updates[postRef + "timestamp"] = time;
 
@@ -304,20 +305,20 @@ function loadPosts() {
     if (user) {
       var postRef = firebase.database().ref('users/' + user.uid + "/posts/").orderByChild('timestamp');
       postRef.on('child_added', function(data) {
-        generatePostHtml(data.key, data.val().liked);
+        generatePostHtml(data.key, data.val().liked, data.val().userId);
       });
     }
   });
 }
 
-function generatePostHtml(postId, liked) {
+function generatePostHtml(postId, liked, userId) {
 
   firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
     var likes = snapshot.val().likes;
     var source = document.getElementById("post-template").innerHTML;
     var template = Handlebars.compile(source);
-    var context = {content: text, likeCount: likes};
+    var context = {content: text, likeCount: likes, userImg: userId.photoURL};
 
     var parent = document.getElementById("midColumn");
     parent.insertAdjacentHTML('beforeend', template(context));
