@@ -348,7 +348,7 @@ function generatePostHtml(postId, liked) {
     var context = {content: text, likeCount: likes};
 
     var parent = document.getElementById("midColumn");
-    parent.appendChild(document.createElement(template(context)));
+    parent.insertAdjacentHTML('beforeend', template(context));
   });
 
 
