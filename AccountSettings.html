@@ -101,7 +101,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       </p>
 
       <p>
-      	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-pink" onclick="changeScreenName()" href="AccountSettings.html">update screen name</a>
+      	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-pink" onclick="changeScreenName()" href="#">update screen name</a>
       </p>
 
     </form>
@@ -180,7 +180,7 @@ function changeScreenName() {
       user.updateProfile({
         displayName: name,
       }).then(function() {
-        alert("You are now " + name);
+          window.location.assign("https://cpi310proj.github.io/AccountSettings");
       }, function(error) {
         alert(error);
       });
