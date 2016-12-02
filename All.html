@@ -99,7 +99,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <script id="post-template" type="text/x-handlebars-template">
 <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
   <img src="{{photo}}" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-  <span class="w3-right w3-opacity">16 min</span>
+  <span class="w3-right w3-opacity">{{dateString}}</span>
   <h4>{{name}}</h4><br>
   <hr class="w3-clear">
   <p>{{content}}</p>
@@ -112,20 +112,19 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 function onload() {
   var postRef = firebase.database().ref('posts/').orderByChild('timestamp');
   postRef.on('child_added', function(data) {
-    generatePostHtml(data.key);
+    generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
   });
 }
 
-function generatePostHtml(postId) {
+function generatePostHtml(posterId, text, timestamp, likes) {
 
-  firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
-    var text = snapshot.val().text;
-    var likes = snapshot.val().likes;
-    var name = snapshot.val().name;
-    var photo = snapshot.val().photo;
+  firebase.database().ref('/users/' + posterId).once('value').then(function(snapshot) {
+    var name = snapshot.val().displayName;
+    var photo = snapshot.val().photoURL;
+    var date = new Date(timestamp).toDateString();
     var source = document.getElementById("post-template").innerHTML;
     var template = Handlebars.compile(source);
-    var context = {content: text, likeCount: likes, name: name, photo: photo};
+    var context = {content: text, likeCount: likes, name: name, photo: photo, dateString: date};
 
     var parent = document.getElementById("midColumn");
     parent.insertAdjacentHTML('beforeend', template(context));
