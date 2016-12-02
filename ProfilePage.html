@@ -285,14 +285,13 @@ function newPost() {
     if(text == "") {
       return;
     }
-    alert(text);
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
           var updates = {};
           var newRef = firebase.database().ref("users/" + user.uid + "posts/").push();
           var key = newRef.key;
-          var userRef = "users/" + user.uid + "posts/" + key + "/";
+          var userRef = "users/" + user.uid + "/posts/" + key + "/";
           var postRef = "posts/" + key + "/";
 
           updates[userRef + "timestamp"] = new Date();
