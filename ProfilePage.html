@@ -293,7 +293,7 @@ function newPost() {
           var userRef = "users/" + user.uid + "/posts/" + key + "/";
           var postRef = "posts/" + key + "/";
 
-          var time = new Date();
+          var time = new Date().now();
           updates[userRef + "timestamp"] = time;
           updates[userRef + "liked"] = false;
           updates[postRef + "text"] = text;
