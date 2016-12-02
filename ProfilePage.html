@@ -327,9 +327,8 @@ function generatePostHtml(postId, isLiked, timestamp) {
   firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
     var likes = snapshot.val().likes;
-    var date = new Date(timestamp);
-    var time = date.getTime();
-    date = time.getDate() + "/" + time.getMonth() + "/" + time.getYear();
+    var date = new Date(timestamp).toDateString();
+    
     var source;
     if(isLiked) {
       source = document.getElementById("post-template-liked").innerHTML;
