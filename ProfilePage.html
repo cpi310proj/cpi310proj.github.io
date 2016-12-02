@@ -313,8 +313,10 @@ function newPost() {
 function loadPosts() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      var postList = firebase.database().ref('users/' + user.uid + "/posts/").orderByChild('timestamp');
-      console.log(postList[0].timestamp);
+      var postRef = firebase.database().ref('users/' + user.uid + "/posts/").orderByChild('timestamp');
+      postRef.on('child_added', function(data) {
+        console.log(data.val().timestamp);
+      });
     }
   });
 }
