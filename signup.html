@@ -55,7 +55,7 @@ body, html {height: 100%}
 
 
 		<p>
-  			<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-purple" onclick="create()" href="AccountSettings.html" id="signButton">sign up</a>
+  			<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-purple" onclick="create()" href="" id="signButton">sign up</a>
   		</p>
 
 		</form>
@@ -119,9 +119,12 @@ function create() {
   // alert("hi");
   // var name = document.getElementById("name-create").value;
   var password = document.getElementById("pass1").value;
-  var email = document.getElementById("mail").value;
-  console.log(password);
-  console.log(email);
+  var email = document.getElementById("mail").value;  
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }, function(error) {
+    // An error happened.
+  });
   firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
     // Handle Errors here.
     var errorCode = error.code;
