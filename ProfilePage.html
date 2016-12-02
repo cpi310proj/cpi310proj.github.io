@@ -130,7 +130,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     </div>
 
     <!-- Middle Column -->
-    <div class="w3-col m7">
+    <div id="midColumn" class="w3-col m7">
 
       <div class="w3-row-padding">
         <div class="w3-col m12">
@@ -315,10 +315,20 @@ function loadPosts() {
     if (user) {
       var postRef = firebase.database().ref('users/' + user.uid + "/posts/").orderByChild('timestamp');
       postRef.on('child_added', function(data) {
-        console.log(data.val().timestamp);
+        generatePostHtml(data.key, data.val().liked);
       });
     }
   });
+}
+
+function generatePostHtml(postId, liked) {
+
+  firebase.database().ref('/post/' + postId).once('value').then(function(snapshot) {
+    var text = snapshot.val().text;
+    $('midColumn').append(p(text));
+  });
+
+
 }
 
 function myFunction(id) {
