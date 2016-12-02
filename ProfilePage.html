@@ -342,7 +342,7 @@ function generatePostHtml(postId, liked) {
 
   firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
-    var source = document.getElementById("post-template").html;
+    var source = document.getElementById("post-template").HTML;
     var template = Handlebars.compile(source);
     var context = {content: text};
 
