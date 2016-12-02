@@ -137,8 +137,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
           <div class="w3-card-2 w3-round w3-white">
             <div class="w3-container w3-padding">
               <h6 class="w3-opacity">Make a fresh post!</h6>
-              <p contenteditable="true" class="w3-border w3-padding"></p>
-              <button type="button" class="w3-btn w3-theme"><i class="fa fa-pencil"></i>  Post</button>
+              <p id="postText" contenteditable="true" class="w3-border w3-padding"></p>
+              <button onclick="newPost()" type="button" class="w3-btn w3-theme"><i class="fa fa-pencil"></i>  Post</button>
             </div>
           </div>
         </div>
@@ -278,6 +278,26 @@ function onload() {
     });
 
   });
+}
+
+function newPost() {
+    var text = document.getElementById("postText").value;
+    if(text == "") {
+      return;
+    }
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          var updates = {};
+          var key = firebase.database().ref("users/" + user.uid + "posts/").push();
+          console.log(key);
+          // var userRef = "users/" + user.uid + "/posts/";
+          // var postRef = "posts/" + user.uid + "/";
+          // firebase.database().ref().update(updates);
+      }
+      else {
+
+      }
 }
 
 function myFunction(id) {
