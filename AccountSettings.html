@@ -277,7 +277,15 @@ function updateProfile() {
 
       var ref = firebase.storage().ref().child(user.uid);
       ref.put(file).then(function(snapshot) {
-        console.log('Uploaded a blob or file!');
+        var url = snapshot.downloadURL;
+        console.log(url);
+        user.updateProfile({
+          photoURL: url
+        }).then(function() {
+          window.location.assign("https://cpi310proj.github.io/AccountSettings");
+        }, function(error) {
+          alert(error);
+        });
       });
 
     }
