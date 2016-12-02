@@ -350,7 +350,7 @@ function generatePostHtml(postId, liked) {
     var context = {content: text};
 
     var parent = document.getElementById("midColumn");
-    parent.append(template(context));
+    parent.appendChild(template(context));
   });
 
 
