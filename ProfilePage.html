@@ -196,7 +196,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <script id="post-template" type="text/x-handlebars-template">
 <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
   <span class="w3-right w3-opacity"></span>
-  <h4>{{content}}</h4><br>
+  <h4>{{content}}</h4>
   <hr class="w3-clear">
   <p>{{dateString}}</p>
   <button type="button" class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
@@ -207,7 +207,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <script id="post-template-liked" type="text/x-handlebars-template">
 <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
   <span class="w3-right w3-opacity"></span>
-  <h4>{{content}}</h4><br>
+  <h4>{{content}}</h4>
   <hr class="w3-clear">
   <p>{{dateString}}</p>
   <button type="button" disabled class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
@@ -224,8 +224,7 @@ function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
 
-      var displayName = user.displayName;
-      var photoUrl = user.photoURL;
+
       var photoView = document.getElementById("profileView");
       var nameLabel = document.getElementById("screenName");
       var locationLabel = document.getElementById("locationLabel");
