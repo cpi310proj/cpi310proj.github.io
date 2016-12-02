@@ -318,6 +318,7 @@ function generatePostHtml(postId, liked, userId) {
     var likes = snapshot.val().likes;
     var source = document.getElementById("post-template").innerHTML;
     var template = Handlebars.compile(source);
+    console.log(userId.photoURL);
     var context = {content: text, likeCount: likes, userImg: userId.photoURL};
 
     var parent = document.getElementById("midColumn");
