@@ -116,19 +116,19 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <form class="w3-container">
 
       <p>
-      <input class="w3-input" type="text">
+      <input id="occupation" class="w3-input" type="text">
       <label>occupation</label>
       </p>
       <p>
-      <input class="w3-input" type="text">
+      <input id="location" class="w3-input" type="text">
       <label>location</label>
       </p>
       <p>
-      <input class="w3-input" type="text">
+      <input id="birthday" class="w3-input" type="text">
       <label>birthday</label>
       </p>
       <p>
-      	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-teal" href="#">update who you are</a>
+      	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-teal" onclick="updateAboutMe()" href="#">update who you are</a>
       </p>
 
     </form>
@@ -165,6 +165,26 @@ function onload() {
       alert("not logged in");
     }
   });
+
+}
+
+function updateAboutMe() {
+    var occ = document.getElementById("occupation").value;
+    var loc = document.getElementById("location").value;
+    var birth = document.getElementById("birthday").value;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+
+        var ref = firebase.child("users/" + user.uid);
+        ref.child("occupation").setValue(occ);
+        ref.child("location").setValue(loc);
+        ref.child("birthday").setValue(birth);
+
+      } else {
+        alert("not logged in");
+      }
+    });
 
 }
 
