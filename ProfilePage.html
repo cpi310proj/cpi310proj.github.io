@@ -296,8 +296,8 @@ function newPost() {
 
           updates[userRef + "timestamp"] = new Date();
           updates[userRef + "liked"] = false;
-          updates[postRef = "text"] = text;
-          updates[postRef = "likes"] = 0;
+          updates[postRef + "text"] = text;
+          updates[postRef + "likes"] = 0;
 
           firebase.database().ref().update(updates);
           window.location.assign("https://cpi310proj.github.io/ProfilePage");
