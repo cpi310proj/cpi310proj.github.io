@@ -233,7 +233,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <hr class="w3-clear">
   <p>{{content}}</p>
   <button type="button" class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
-  <p class="w3-right w3-margin-left">5</p>
+  <p class="w3-right w3-margin-left">{{likeCount}}</p>
 </div>
 </script>
 
@@ -342,15 +342,13 @@ function generatePostHtml(postId, liked) {
 
   firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
+    var likes = snapshot.val().likes;
     var source = document.getElementById("post-template").innerHTML;
-    console.log(source);
-    var source2 = document.getElementById("post-template").html;
-    console.log(source2);
     var template = Handlebars.compile(source);
-    var context = {content: text};
+    var context = {content: text, likeCount: likes};
 
     var parent = document.getElementById("midColumn");
-    parent.appendChild(template(context));
+    parent.appendChild(document.createElement(template(context)));
   });
 
 
