@@ -204,15 +204,15 @@ function onload() {
 
 }
 
-funciton changePassword() {
+function changePassword() {
   var pass = document.getElementById("newPassword").value;
   var user = firebase.auth().currentUser;
 
   user.updatePassword(newPassword).then(function() {
-    window.location.assign("https://cpi310proj.github.io/AccountSettings");
-}, function(error) {
-  alert(error);
-});
+      window.location.assign("https://cpi310proj.github.io/AccountSettings");
+    }, function(error) {
+      alert(error);
+  });
 }
 
 function updateAboutMe() {
