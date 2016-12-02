@@ -342,7 +342,7 @@ function generatePostHtml(postId, liked) {
 
   firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
-    var source = document.getElementById("post-template").HTML;
+    var source = document.getElementById("post-template").innerHTML;
     console.log(source);
     var source2 = document.getElementById("post-template").html;
     console.log(source2);
