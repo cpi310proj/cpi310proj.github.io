@@ -72,16 +72,16 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
     <form class="w3-container">
       <p>
-      <input class="w3-input" type="text">
+      <input class="w3-input" type="password">
       <label>current password</label></p>
       <p>
-      <input class="w3-input" type="text">
+      <input id="newPassword" class="w3-input" type="password">
       <label>new password</label></p>
       <p>
-      <input class="w3-input" type="text">
+      <input class="w3-input" type="password">
       <label>new password again</label></p>
       <p>
-      	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-purple" href="#">update</a>
+      	<a onClick=changePassword() class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-purple" href="#">update password</a>
       </p>
 
 
@@ -202,6 +202,17 @@ function onload() {
     });
   });
 
+}
+
+funciton changePassword() {
+  var pass = document.getElementById("newPassword").value;
+  var user = firebase.auth().currentUser;
+
+  user.updatePassword(newPassword).then(function() {
+    window.location.assign("https://cpi310proj.github.io/AccountSettings");
+}, function(error) {
+  alert(error);
+});
 }
 
 function updateAboutMe() {
