@@ -314,7 +314,10 @@ function loadPosts() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       var postList = firebase.database().ref('users/' + user.uid + "/posts/").orderByChild('timestamp');
-      console.log(postList);
+      postList.forEach(function (item)) {
+        console.log(item.timestamp);
+        console.log(item.liked);
+      });
     }
   });
 }
