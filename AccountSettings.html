@@ -175,8 +175,9 @@ function updateAboutMe() {
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-
-        var ref = firebase.child("users/" + user.uid);
+        var admin = require("firebase-admin");
+        var db = admin.database();
+        var ref = db.ref("users/" + user.uid);
         ref.child("occupation").setValue(occ);
         ref.child("location").setValue(loc);
         ref.child("birthday").setValue(birth);
