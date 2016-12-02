@@ -3,6 +3,7 @@
 <head>
 <title>My Rad Page</title>
 
+<script src="jquery-3.1.1.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
 <script>
   // Initialize Firebase
@@ -15,7 +16,6 @@
   };
   firebase.initializeApp(config);
 </script>
-<script src="jquery-3.1.1.min.js"></script>
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -329,7 +329,10 @@ function generatePostHtml(postId, liked) {
 
   firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
-    $('midColumn').append(p(text));
+    $(document).ready(function () {
+      $('midColumn').append(p(text));
+    });
+
   });
 
 
