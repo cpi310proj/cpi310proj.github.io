@@ -243,7 +243,7 @@ function onload() {
     } else {
       alert("not logged in");
     }
-
+    loadPosts();
     firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
       var location = snapshot.val().location;
       var occupation = snapshot.val().occupation;
@@ -276,7 +276,6 @@ function onload() {
       }
       birthdayLabel.appendChild(birthdayNode);
     });
-    loadPosts();
   });
 }
 
@@ -317,6 +316,7 @@ function loadPosts() {
       var postList = firebase.database().ref('users/' + user.uid + "/posts/").orderByChild('timestamp');
       console.log(postList);
     }
+  });
 }
 
 function myFunction(id) {
