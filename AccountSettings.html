@@ -157,7 +157,7 @@ function changeScreenName() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
 
-      var name = document.getElementById("newScreenName");
+      var name = document.getElementById("newScreenName").value;
       if(name == "") {
         alert("Invalid Display Name");
       }
