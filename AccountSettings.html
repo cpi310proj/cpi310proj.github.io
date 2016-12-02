@@ -193,6 +193,11 @@ function onload() {
       else {
         birthLabel.innerHTML = " " + birthday;
       }
+
+      var styles = div.getElementsByTagName('style');
+      for(var x = 0; x<styles.length;x++){
+          document.getElementsByTagName('head')[0].appendChild(styles[x]);
+      }
     });
   });
 
