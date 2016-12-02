@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html>
+<head>
 <title>Rad Pages</title>
+
+<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+<script>
+ // Initialize Firebase
+ var config = {
+   apiKey: "AIzaSyBybzQ7A9ivNxUvOI03rbFXOS6UVnEAszk",
+   authDomain: "test-1cc17.firebaseapp.com",
+   databaseURL: "https://test-1cc17.firebaseio.com",
+   storageBucket: "test-1cc17.appspot.com",
+   messagingSenderId: "376566074849"
+ };
+ firebase.initializeApp(config);
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="w3.css">
 <link rel="stylesheet" href="w3-theme-black.css">
@@ -9,7 +24,8 @@
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
-<body class="w3-theme-l5">
+</head>
+<body onload="onload()" class="w3-theme-l5">
 
 <!-- Navbar -->
 <div class="w3-top">
@@ -46,7 +62,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 	<div class="w3-col m3 w3-center">
 	<p></p>
 	</div>
-	<div class="w3-col m6 w3-center ">
+	<div id="midColumn" class="w3-col m6 w3-center ">
 
 
       <div class="w3-row-padding">
@@ -59,45 +75,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </div>
       </div>
 
-      <!-- <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-        <img src="bird.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">1 min</span>
-        <h4>John Doe</h4><br>
-        <hr class="w3-clear">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-          <div class="w3-row-padding" style="margin:0 -16px">
-            <div class="w3-half">
-              <img src="/w3images/lights.jpg" style="width:100%" alt="Northern Lights" class="w3-margin-bottom">
-            </div>
-            <div class="w3-half">
-              <img src="/w3images/nature.jpg" style="width:100%" alt="Nature" class="w3-margin-bottom">
-          </div>
-        </div>
-        <button type="button" class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
-        <button type="button" class="w3-btn w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button>
-      </div>
 
-      <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-        <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">16 min</span>
-        <h4>Jane Doe</h4><br>
-        <hr class="w3-clear">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <button type="button" class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
-        <button type="button" class="w3-btn w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button>
-      </div>
-
-      <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
-        <img src="/w3images/avatar6.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
-        <span class="w3-right w3-opacity">32 min</span>
-        <h4>Angie Jane</h4><br>
-        <hr class="w3-clear">
-        <p>Have you seen this?</p>
-        <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <button type="button" class="w3-btn w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
-        <button type="button" class="w3-btn w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button>
-      </div> -->
 	  	<div class="w3-col m3 w3-center">
 			<p></p>
 	</div>
@@ -117,7 +95,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </footer>
 
 
-<script>
+<script id="post-template" type="text/x-handlebars-template">
 <div class="w3-container w3-card-2 w3-white w3-round w3-margin"><br>
   <img src="/w3images/avatar5.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
   <span class="w3-right w3-opacity">16 min</span>
@@ -129,6 +107,30 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </script>
 
 <script>
+
+function onload() {
+  var postRef = firebase.database().ref('posts/').orderByChild('timestamp');
+  postRef.on('child_added', function(data) {
+    generatePostHtml(data.key);
+  });
+}
+
+function generatePostHtml(postId) {
+
+  firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
+    var text = snapshot.val().text;
+    var likes = snapshot.val().likes;
+    var source = document.getElementById("post-template").innerHTML;
+    var template = Handlebars.compile(source);
+    var context = {content: text, likeCount: likes};
+
+    var parent = document.getElementById("midColumn");
+    parent.insertAdjacentHTML('beforeend', template(context));
+  });
+
+
+}
+
 // Accordion
 function myFunction(id) {
     var x = document.getElementById(id);
