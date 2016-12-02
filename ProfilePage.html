@@ -276,7 +276,7 @@ function onload() {
       }
       birthdayLabel.appendChild(birthdayNode);
     });
-
+    loadPosts();
   });
 }
 
@@ -309,6 +309,14 @@ function newPost() {
           alert("not logged in");
       }
     });
+}
+
+function loadPosts() {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      var postList = firebase.database().ref('users/' + user.uid + "/posts/").orderByChild('timestamp');
+      console.log(postList);
+    }
 }
 
 function myFunction(id) {
