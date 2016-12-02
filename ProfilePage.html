@@ -224,12 +224,20 @@ function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
 
-
       var photoView = document.getElementById("profileView");
       var nameLabel = document.getElementById("screenName");
       var locationLabel = document.getElementById("locationLabel");
       var jobLabel = document.getElementById("jobLabel");
       var birthdayLabel = document.getElementById("birthdayLabel");
+
+
+    loadPosts();
+    firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
+      var location = snapshot.val().location;
+      var occupation = snapshot.val().occupation;
+      var birthday = snapshot.val().birthday;
+      var displayName = snapshot.val().displayName;
+      var photoUrl = snapshot.val().photoUrl;
 
       profileView.src = photoUrl;
 
@@ -239,14 +247,6 @@ function onload() {
       else {
         nameLabel.innerHTML = displayName;
       }
-    } else {
-      alert("not logged in");
-    }
-    loadPosts();
-    firebase.database().ref('/users/' + user.uid).once('value').then(function(snapshot) {
-      var location = snapshot.val().location;
-      var occupation = snapshot.val().occupation;
-      var birthday = snapshot.val().birthday;
 
       var locationNode;
       if(location == null || location == "") {
@@ -275,6 +275,9 @@ function onload() {
       }
       birthdayLabel.appendChild(birthdayNode);
     });
+  } else {
+    alert("not logged in");
+  }
   });
 }
 
