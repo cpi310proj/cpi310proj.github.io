@@ -121,19 +121,30 @@ function create() {
   var password = document.getElementById("pass1").value;
   var email = document.getElementById("mail").value;
 
-  firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    if (errorCode == 'auth/weak-password' || errorCode == 'auth/email-already-in-use' || errorCode == 'auth/invalid-email' ||
-        errorCode == 'auth/operation-not-allowed') {
-          alert(errorMessage);
-    }
-    else {
-        window.location.href = "https://cpi310proj.github.io/signin";
-    }
-    // ...
-    });
+  firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
+      window.location.assign("https://cpi310proj.github.io/signin");
+    }, function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode == 'auth/weak-password' || errorCode == 'auth/email-already-in-use' || errorCode == 'auth/invalid-email' ||
+          errorCode == 'auth/operation-not-allowed') {
+            alert(errorMessage);
+      }
+  });
+
+  // catch(function(error) {
+  //   // Handle Errors here.
+  //   var errorCode = error.code;
+  //   var errorMessage = error.message;
+  //   if (errorCode == 'auth/weak-password' || errorCode == 'auth/email-already-in-use' || errorCode == 'auth/invalid-email' ||
+  //       errorCode == 'auth/operation-not-allowed') {
+  //         alert(errorMessage);
+  //   }
+  //   else {
+  //       window.location.href = "https://cpi310proj.github.io/signin";
+  //   }
+  //   // ...
+  //   });
     // $('#signIn').click();
     // window.location.href = "https://cpi310proj.github.io/index";
   }
