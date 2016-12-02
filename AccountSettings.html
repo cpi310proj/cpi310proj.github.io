@@ -157,15 +157,15 @@ function changeScreenName() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
 
-      var displayName = document.getElementById("newScreenName");
-      if(displayName == "") {
+      var name = document.getElementById("newScreenName");
+      if(name == "") {
         alert("Invalid Display Name");
       }
 
       user.updateProfile({
-        displayName: displayName,
+        displayName: name,
       }).then(function() {
-        alert("You are now " + displayName);
+        alert("You are now " + name);
       }, function(error) {
         alert(error);
       });
