@@ -173,12 +173,12 @@ function onload() {
       var occupation = snapshot.val().occupation;
       var birthday = snapshot.val().birthday;
 
-      if(location == null || location == "") {
-        locationLabel.innerHTML = " Set your location";
-      }
-      else {
-        locationLabel.innerHTML = " " + location;
-      }
+      // if(location == null || location == "") {
+      //   locationLabel.innerHTML = " Set your location";
+      // }
+      // else {
+      //   locationLabel.innerHTML = " " + location;
+      // }
 
       if(occupation == null || occupation == "") {
         jobLabel.innerHTML = " Set your occupation";
@@ -188,12 +188,12 @@ function onload() {
         jobLabel.appendChild(jobNode);
       }
 
-      if(birthday == null || birthday == "") {
-        birthdayLabel.innerHTML = " Set your birthday";
-      }
-      else {
-        birthdayLabel.innerHTML = " " + birthday;
-      }
+      // if(birthday == null || birthday == "") {
+      //   birthdayLabel.innerHTML = " Set your birthday";
+      // }
+      // else {
+      //   birthdayLabel.innerHTML = " " + birthday;
+      // }
 
 
     });
