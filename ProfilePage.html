@@ -281,10 +281,11 @@ function onload() {
 }
 
 function newPost() {
-    var text = document.getElementById("postText").value;
+    var text = document.getElementById("postText").innerHTML;
     if(text == "") {
       return;
     }
+    alert(text);
 
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
