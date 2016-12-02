@@ -323,7 +323,7 @@ function loadPosts() {
 
 function generatePostHtml(postId, liked) {
 
-  firebase.database().ref('/post/' + postId).once('value').then(function(snapshot) {
+  firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
     $('midColumn').append(p(text));
   });
