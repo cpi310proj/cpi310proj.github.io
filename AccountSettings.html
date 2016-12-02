@@ -54,7 +54,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       <div class="w3-card-2 w3-round w3-white">
         <div class="w3-container">
          <h4 id="screenName" class="w3-center"></h4>
-         <p class="w3-center"><img src="bird.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+         <p class="w3-center"><img id="profileImage" src="" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
          <p id="jobLabel"><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i></p>
          <p id="locationLabel"><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i></p>
@@ -156,6 +156,8 @@ function onload() {
     if (user) {
 
       var displayName = user.displayName;
+      var photoUrl = user.photoURL;
+      var photoView = document.getElementById("profileImage");
       var nameLabel = document.getElementById("screenName");
       var locationLabel = document.getElementById("locationLabel");
       var jobLabel = document.getElementById("jobLabel");
@@ -167,6 +169,9 @@ function onload() {
       else {
         nameLabel.innerHTML = displayName;
       }
+
+      photoView.src = photoUrl;
+
     } else {
       alert("not logged in");
     }
