@@ -57,8 +57,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
          <p class="w3-center"><img src="bird.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
          <hr>
          <p id="jobLabel"><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i></p>
-         <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-         <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+         <p id="locationLabel"><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
+         <p id="birthdayLabel"><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
         </div>
       </div>
       <br>
@@ -173,29 +173,32 @@ function onload() {
       var occupation = snapshot.val().occupation;
       var birthday = snapshot.val().birthday;
 
-      // if(location == null || location == "") {
-      //   locationLabel.innerHTML = " Set your location";
-      // }
-      // else {
-      //   locationLabel.innerHTML = " " + location;
-      // }
-
-      if(occupation == null || occupation == "") {
-        jobLabel.innerHTML = " Set your occupation";
+      var locationNode;
+      if(location == null || location == "") {
+        locationNode = document.createTextNode(" Set your location");
       }
       else {
-        var jobNode = document.createTextNode(occupation);
-        jobLabel.appendChild(jobNode);
+        locationNode = document.createTextNode(location);
       }
+      locationLabel.appendChild(locationNode);
 
-      // if(birthday == null || birthday == "") {
-      //   birthdayLabel.innerHTML = " Set your birthday";
-      // }
-      // else {
-      //   birthdayLabel.innerHTML = " " + birthday;
-      // }
+      var jobNode;
+      if(occupation == null || occupation == "") {
+        jobNode = document.createTextNode(" Set your occupation");
+      }
+      else {
+        jobNode = document.createTextNode(occupation);
+      }
+      jobLabel.appendChild(jobNode);
 
-
+      var birthdayLabel;
+      if(birthday == null || birthday == "") {
+        birthdayNode = document.createTextNode(" Set your birthday");
+      }
+      else {
+        birthdayNode = document.createTextNode(birthday);
+      }
+      birthdayLabel.appendChild(birthdayNode);
     });
   });
 
