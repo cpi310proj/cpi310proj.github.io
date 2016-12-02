@@ -254,14 +254,13 @@ function onload() {
     if (user) {
 
       var displayName = user.displayName;
-      alert(displayName);
       var nameLabel = document.getElementById("screenName");
 
       if(displayName == null || displayName == "") {
-        nameLabel.value = "My Profile"
+        nameLabel.innerHTML = "My Profile"
       }
       else {
-        nameLabel.value = displayName;
+        nameLabel.innerHTML = displayName;
       }
     } else {
       alert("not logged in");
