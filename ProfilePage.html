@@ -3,8 +3,9 @@
 <head>
 <title>My Rad Page</title>
 
-<script src="jquery-3.1.1.min.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">google.load("jquery", "3.1.1");</script>
+ <script src="https://www.gstatic.com/firebasejs/3.6.0/firebase.js"></script>
 <script>
   // Initialize Firebase
   var config = {
@@ -329,10 +330,7 @@ function generatePostHtml(postId, liked) {
 
   firebase.database().ref('/posts/' + postId).once('value').then(function(snapshot) {
     var text = snapshot.val().text;
-    $(document).ready(function () {
-      $('midColumn').append(p(text));
-    });
-
+    $('midColumn').append(p(text));
   });
 
 
