@@ -70,37 +70,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       </div>
       <br>
 
-      <!-- Accordion -->
-      <!-- <div class="w3-card-2 w3-round">
-        <div class="w3-accordion w3-white">
-          <button onclick="myFunction('Demo3')" class="w3-btn-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i> My Photos</button>
-          <div id="Demo3" class="w3-accordion-content w3-container">
-         <div class="w3-row-padding">
-         <br>
-           <div class="w3-half">
-             <img src="/w3images/lights.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/mountains.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/nature.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-           <div class="w3-half">
-             <img src="/w3images/fjords.jpg" style="width:100%" class="w3-margin-bottom">
-           </div>
-         </div>
-          </div>
-        </div>
-      </div>
-      <br> -->
-
       <!-- Interests -->
       <div class="w3-card-2 w3-round w3-white w3-hide-small">
         <div class="w3-container">
@@ -158,12 +127,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <div class="w3-container">
           <p>SoundCloud</p>
 		  <!--Change this line below to the embedd code when submit button is pressed -->
-        <iframe width="100%" height="250" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/257040468&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>
+        <div id="soundcloud">
+          <!-- <iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/19265449&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
+        </div>
           <p><strong>Import your own Soundcloud playlist!</strong></p>
         <form class="w3-container">
 <label>SoundCloud Embedd Code</label>
-<input class="w3-input" type="text">
-<button class="w3-btn w3-black">Submit</button>
+<input id="newEmbed" class="w3-input" type="text">
+<button onclick="updateSoundcloud()" class="w3-btn w3-black">Submit</button>
 </form>
         </div>
       </div>
@@ -229,6 +200,7 @@ function onload() {
       var locationLabel = document.getElementById("locationLabel");
       var jobLabel = document.getElementById("jobLabel");
       var birthdayLabel = document.getElementById("birthdayLabel");
+      var soundcloudDiv = document.getElementById("soundcloud");
 
 
     loadPosts();
@@ -238,8 +210,11 @@ function onload() {
       var birthday = snapshot.val().birthday;
       var displayName = snapshot.val().displayName;
       var photoUrl = snapshot.val().photoURL;
+      var soundcloudHtml = snapshot.val().soundcloud;
 
       profileView.src = photoUrl;
+
+      soundcloudDiv.insertAdjacentHTML('beforeend', soundcloudHtml);
 
       if(displayName == null || displayName == "") {
         nameLabel.innerHTML = "My Profile"
@@ -279,6 +254,21 @@ function onload() {
     alert("not logged in");
   }
   });
+}
+
+function updateSoundcloud() {
+  var html = document.getElementById("newEmbed").value;
+  if(html != "") {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          var updates = {};
+          var ref = firebase.database().ref("users/" + user.uid + "/soundcloud");
+          updates[ref] = html;
+          firebase.database().ref().update(updates);
+          window.location.assign("https://cpi310proj.github.io/ProfilePage");
+      }
+    });
+  }
 }
 
 function newPost() {
