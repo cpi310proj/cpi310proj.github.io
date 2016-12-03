@@ -258,11 +258,12 @@ function onload() {
 
 function updateSoundcloud() {
   var html = document.getElementById("newEmbed").value;
+
   if(html != "") {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
           var updates = {};
-          var ref = firebase.database().ref("users/" + user.uid + "/soundcloud");
+          var ref = firebase.database().ref("users/" + user.uid + "soundcloud");
           updates[ref] = html;
           firebase.database().ref().update(updates);
           window.location.assign("https://cpi310proj.github.io/ProfilePage");
