@@ -120,16 +120,16 @@ function Post(posterId, text, timestamp, likes) {
   return this;
 }
 
-function generatePostHtml(posterId, text, timestamp, likes) {
+function generatePostHtml(pid, message, time, like) {
 
-  firebase.database().ref('/users/' + posterId).once('value').then(function(snapshot) {
+  firebase.database().ref('/users/' + pid).once('value').then(function(snapshot) {
     var name = snapshot.val().displayName;
     var photo = snapshot.val().photoURL;
-    var date = new Date(timestamp).toDateString();
+    var date = new Date(time).toDateString();
     var source = document.getElementById("post-template").innerHTML;
     var template = Handlebars.compile(source);
-    var context = {content: text, likeCount: likes, name: name, photo: photo, dateString: date};
-    console.log(text);
+    var context = {content: message, likeCount: like, name: name, photo: photo, dateString: date};
+    console.log(message);
     var parent = document.getElementById("midColumn");
     parent.insertAdjacentHTML('beforeend', template(context));
   });
