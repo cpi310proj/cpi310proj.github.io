@@ -65,7 +65,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 	<div class="w3-col m3 w3-center">
 	<p></p>
 	</div>
-	<div id="midColumn" class="w3-col m6 w3-center ">
+	<div class="w3-col m6 w3-center ">
 
 
       <div class="w3-row-padding">
@@ -80,7 +80,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 
 	  	<div class="w3-col m3 w3-center">
-			<p></p>
+			<p id="midColumn"></p>
 	</div>
     <!-- End Right Column -->
     </div>
@@ -115,33 +115,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      var stack = new Array();
       var postRef = firebase.database().ref('posts/').orderByChild('timestamp');
       postRef.on('child_added', function(data) {
-        var post = new Post(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
-        stack.push(post);
-        // generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
-      }.then(function() {
-        while(stack.length > 0) {
-          console.log(stack.size);
-          var post = stack.pop();
-          generatePostHtml(post.posterId, post.text, post.timestamp, post.likes);
-        }
-      }));
-
+        generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
+      });
     }
     else {
       window.location.assign("https://cpi310proj.github.io/index");
     }
   });
-}
-
-function Post(posterId, text, timestamp, likes) {
-  this.posterId = posterId;
-  this.text = text;
-  this.timestamp = timestamp;
-  this.likes = likes;
-  return this;
 }
 
 function logout() {
@@ -163,7 +145,7 @@ function generatePostHtml(posterId, text, timestamp, likes) {
     var context = {content: text, likeCount: likes, name: name, photo: photo, dateString: date};
 
     var parent = document.getElementById("midColumn");
-    parent.insertAdjacentHTML('beforeend', template(context));
+    parent.insertAdjacentHTML('afterend', template(context));
   });
 
 
