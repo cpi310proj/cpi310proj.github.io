@@ -118,8 +118,8 @@ function onload() {
 
       firebase.database().ref('/posts').once('value').then(function(snapshot) {
         snapshot.forEach(function(child)) {
-          alert(snapshot.val().posterId);
-        });        
+          alert(child.val().posterId);
+        });
       });
 
       var postRef = firebase.database().ref('posts').orderByChild('timestamp');
