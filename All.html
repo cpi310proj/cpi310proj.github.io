@@ -120,6 +120,24 @@ function Post(posterId, text, timestamp, likes) {
   return this;
 }
 
+function generatePostHtml(posterId, text, timestamp, likes) {
+
+  firebase.database().ref('/users/' + posterId).once('value').then(function(snapshot) {
+    var name = snapshot.val().displayName;
+    var photo = snapshot.val().photoURL;
+    var date = new Date(timestamp).toDateString();
+    var source = document.getElementById("post-template").innerHTML;
+    var template = Handlebars.compile(source);
+    var context = {content: text, likeCount: likes, name: name, photo: photo, dateString: date};
+    console.log(text);
+    var parent = document.getElementById("midColumn");
+    parent.insertAdjacentHTML('beforeend', template(context));
+  });
+
+
+}
+
+
 function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -165,22 +183,6 @@ function logout() {
   });
 }
 
-function generatePostHtml(posterId, text, timestamp, likes) {
-
-  firebase.database().ref('/users/' + posterId).once('value').then(function(snapshot) {
-    var name = snapshot.val().displayName;
-    var photo = snapshot.val().photoURL;
-    var date = new Date(timestamp).toDateString();
-    var source = document.getElementById("post-template").innerHTML;
-    var template = Handlebars.compile(source);
-    var context = {content: text, likeCount: likes, name: name, photo: photo, dateString: date};
-    console.log(text);
-    var parent = document.getElementById("midColumn");
-    parent.insertAdjacentHTML('beforeend', template(context));
-  });
-
-
-}
 
 // Accordion
 function myFunction(id) {
