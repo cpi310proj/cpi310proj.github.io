@@ -115,6 +115,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+
+      firebase.database().ref('/posts').once('value').then(function(snapshot) {
+        alert(snapshot);
+      });
+
       var postRef = firebase.database().ref('posts').orderByChild('timestamp');
       postRef.on('child_added', function(data) {
         generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
