@@ -121,7 +121,7 @@ function onload() {
         stack.push(data);
         // generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
       });
-      while(stack.length() > 0) {
+      while(stack.length > 0) {
         var data = stack.pop();
         generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
       }
