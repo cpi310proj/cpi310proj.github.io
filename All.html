@@ -112,14 +112,36 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <script>
 
+function Post(poserId, text, timestamp, likes) {
+  this.posterId = posterId;
+  this.text = text;
+  this.timestamp = timestamp;
+  this.likes = likes;
+  return this;
+}
+
 function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
 
       firebase.database().ref('/posts').once('value').then(function(snapshot) {
+
+        var map = {};
+
         snapshot.forEach(function(child) {
-          alert(child.val().posterId);
+          Post p = new Post(child.val().posterId, child.val().text, child.val().timestamp, child.val().likes);
+          map.add({child.val().timestamp : p})
         });
+
+        var keys = Object.keys(map);
+        keys.sort();
+
+        for(var i = 0; i < keys.length; i++) {
+          index = keys[i];
+          p = map[index];
+          generatePostHtml(p.posterId, p.text, p.timestamp, p.likes);
+        }
+
       });
 
       var postRef = firebase.database().ref('posts').orderByChild('timestamp');
