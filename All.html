@@ -147,14 +147,17 @@ function onload() {
 
         var map = {};
 
-        snapshot.forEach(function(child) {
-          console.log(child.val().text);
+        snapshot.forEach(function(child) {        
           var p = new Post(child.val().posterId, child.val().text, child.val().timestamp, child.val().likes);
           map[child.val().timestamp] = p;
         });
 
         var keys = Object.keys(map);
         keys.sort();
+
+        var source = document.getElementById("post-template").innerHTML;
+        var template = Handlebars.compile(source);
+        var parent = document.getElementById("midColumn");
 
         for(var i = 0; i < keys.length; i++) {
           var index = keys[i];
@@ -164,11 +167,9 @@ function onload() {
             var name = snapshot.val().displayName;
             var photo = snapshot.val().photoURL;
             var date = new Date(p.timestamp).toDateString();
-            var source = document.getElementById("post-template").innerHTML;
-            var template = Handlebars.compile(source);
             var context = {content: p.text, likeCount: p.likes, name: name, photo: photo, dateString: date};
-            var parent = document.getElementById("midColumn");
-            parent.insertAdjacentHTML('beforeend', template(context));            
+            console.log(p.text);
+            parent.insertAdjacentHTML('beforeend', template(context));
           });
           // generatePostHtml(p.posterId, p.text, p.timestamp, p.likes);
         }
