@@ -39,7 +39,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <li><a href="ProfilePage.html" class="w3-padding-large w3-hover-white w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>RAD PAGES &#x270C</a></li>
   <li class="w3-hide-small"><a href="All.html" class="w3-padding-large w3-hover-white" title="'Sup world?"><i class="fa fa-globe"></i></a></li>
   <li class="w3-hide-small"><a href="AccountSettings.html" class="w3-padding-large w3-hover-white" title="Change up ur Settings"><i class="fa fa-user"></i></a></li>
-  <li class="w3-hide-small"><a href="index.html" class="w3-padding-large w3-hover-white" title="L84 bro!"><i class="fa fa-times"></i></a></li>
+  <li class="w3-hide-small"><a onclick="logout()" href="index.html" class="w3-padding-large w3-hover-white" title="L84 bro!"><i class="fa fa-times"></i></a></li>
  </ul>
 </div>
 
@@ -72,7 +72,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       </div>
       <br>
 
-      
+
 
       <!-- Alert Box -->
       <div class="w3-container w3-round w3-theme-l4 w3-border w3-theme-border w3-margin-bottom w3-hide-small">
@@ -123,7 +123,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       </div>
       <br>
 
-      
+
 
     <!-- End Right Column -->
     </div>
@@ -288,6 +288,14 @@ function loadPosts() {
         generatePostHtml(data.key, data.val().liked, data.val().timestamp);
       });
     }
+  });
+}
+
+function logout() {
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }, function(error) {
+    // An error happened.
   });
 }
 
