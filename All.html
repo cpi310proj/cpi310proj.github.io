@@ -121,11 +121,14 @@ function onload() {
         var post = new Post(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
         stack.push(post);
         // generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
+      }).then(function() {
+        while(stack.length > 0) {
+          console.log(stack.size);
+          var post = stack.pop();
+          generatePostHtml(post.posterId, post.text, post.timestamp, post.likes);
+        }
       });
-      while(stack.length > 0) {
-        var post = stack.pop();
-        generatePostHtml(post.posterId, post.text, post.timestamp, post.likes);
-      }
+
     }
     else {
       window.location.assign("https://cpi310proj.github.io/index");
