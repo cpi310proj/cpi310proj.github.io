@@ -115,11 +115,16 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-
+      var stack = [];
       var postRef = firebase.database().ref('posts/').orderByChild('timestamp');
       postRef.on('child_added', function(data) {
-        generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
+        stack.push(data);
+        // generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
       });
+      while(stack.size() > 0) {
+        var data = stack.pop();
+        generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
+      }
     }
     else {
       window.location.assign("https://cpi310proj.github.io/index");
