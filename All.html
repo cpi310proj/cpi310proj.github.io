@@ -117,7 +117,8 @@ function onload() {
     if (user) {
 
       firebase.database().ref('/posts').once('value').then(function(snapshot) {
-
+        console.log(snapshot.length);
+        console.log(snapshot.val().posterId);
         for(var i = 0; i < snapshot.length; i++) {
           alert(snapshot[i].val().posterId);
         }
