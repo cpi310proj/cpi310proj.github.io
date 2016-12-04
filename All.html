@@ -123,15 +123,16 @@ function Post(posterId, text, timestamp, likes) {
 function generatePostHtml(pid, message, time, like) {
 
   firebase.database().ref('/users/' + pid).once('value').then(function(snapshot) {
+    console.log("starting post generation");
     var name = snapshot.val().displayName;
     var photo = snapshot.val().photoURL;
     var date = new Date(time).toDateString();
     var source = document.getElementById("post-template").innerHTML;
     var template = Handlebars.compile(source);
     var context = {content: message, likeCount: like, name: name, photo: photo, dateString: date};
-    console.log(message);
     var parent = document.getElementById("midColumn");
     parent.insertAdjacentHTML('beforeend', template(context));
+    console.log("ending post generation");
   });
 
 
