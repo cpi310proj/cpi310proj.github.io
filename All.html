@@ -144,10 +144,10 @@ function onload() {
 
       });
 
-      var postRef = firebase.database().ref('posts').orderByChild('timestamp');
-      postRef.on('child_added', function(data) {
-        generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
-      });
+      // var postRef = firebase.database().ref('posts').orderByChild('timestamp');
+      // postRef.on('child_added', function(data) {
+      //   generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
+      // });
     }
     else {
       window.location.assign("https://cpi310proj.github.io/index");
