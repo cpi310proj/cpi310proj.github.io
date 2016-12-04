@@ -117,7 +117,9 @@ function onload() {
     if (user) {
 
       firebase.database().ref('/posts').once('value').then(function(snapshot) {
-        alert(snapshot);
+        for(int i = 0; i < snapshot.length; i++) {
+          alert(snapshot[i].val().posterId);
+        }
       });
 
       var postRef = firebase.database().ref('posts').orderByChild('timestamp');
