@@ -129,7 +129,7 @@ function onload() {
         var map = {};
 
         snapshot.forEach(function(child) {
-          Post p = new Post(child.val().posterId, child.val().text, child.val().timestamp, child.val().likes);
+          var p = new Post(child.val().posterId, child.val().text, child.val().timestamp, child.val().likes);
           map.add({child.val().timestamp : p})
         });
 
@@ -137,8 +137,8 @@ function onload() {
         keys.sort();
 
         for(var i = 0; i < keys.length; i++) {
-          index = keys[i];
-          p = map[index];
+          var index = keys[i];
+          var p = map[index];
           generatePostHtml(p.posterId, p.text, p.timestamp, p.likes);
         }
 
