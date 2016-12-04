@@ -138,6 +138,11 @@ function generatePostHtml(pid, message, time, like) {
 
 }
 
+function getUserSnapshot(id ,callback) {
+  firebase.database().ref('/users/' + id).once('value').then(function(snapshot) {
+    callback(snapshot);
+  });
+}
 
 function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
@@ -163,7 +168,8 @@ function onload() {
           var index = keys[i];
           var p = map[index];
           console.log(p.text);
-          firebase.database().ref('/users/' + p.posterId).once('value').then(function(snapshot) {
+
+          getUserSnapshot(p.posterId, function(snapshot) {
             var name = snapshot.val().displayName;
             var photo = snapshot.val().photoURL;
             var date = new Date(p.timestamp).toDateString();
@@ -171,6 +177,14 @@ function onload() {
             console.log(p.text);
             parent.insertAdjacentHTML('beforeend', template(context));
           });
+          // firebase.database().ref('/users/' + p.posterId).once('value').then(function(snapshot) {
+          //   var name = snapshot.val().displayName;
+          //   var photo = snapshot.val().photoURL;
+          //   var date = new Date(p.timestamp).toDateString();
+          //   var context = {content: p.text, likeCount: p.likes, name: name, photo: photo, dateString: date};
+          //   console.log(p.text);
+          //   parent.insertAdjacentHTML('beforeend', template(context));
+          // });
           // generatePostHtml(p.posterId, p.text, p.timestamp, p.likes);
         }
 
