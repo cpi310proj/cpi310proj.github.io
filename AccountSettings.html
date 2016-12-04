@@ -34,7 +34,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <li><a href="ProfilePage.html" class="w3-padding-large w3-hover-white w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>RAD PAGES &#x270C</a></li>
   <li class="w3-hide-small"><a href="All.html" class="w3-padding-large w3-hover-white" title="'Sup world?"><i class="fa fa-globe"></i></a></li>
   <li class="w3-hide-small"><a href="AccountSettings.html" class="w3-padding-large w3-hover-white" title="Change up ur Settings"><i class="fa fa-user"></i></a></li>
-  <li class="w3-hide-small"><a href="index.html" class="w3-padding-large w3-hover-white" title="L84 bro!"><i class="fa fa-times"></i></a></li>
+  <li class="w3-hide-small"><a onclick="logout()" href="index.html" class="w3-padding-large w3-hover-white" title="L84 bro!"><i class="fa fa-times"></i></a></li>
  </ul>
 </div>
 
@@ -44,7 +44,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     <li><a class="w3-padding-large" href="All.html">Fresh Posts On The Word Stage</a></li>
     <li><a class="w3-padding-large" href="AccountSettings.html">Mess with your profile</a></li>
     <li><a class="w3-padding-large" href="ProfilePage.html">My Rad Page</a></li>
-    <li><a class="w3-padding-large" href="index.html">Peace out dude!</a></li>
   </ul>
 </div>
 
@@ -67,7 +66,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </div>
 
 <div class="w3-row">
-  <div class="w3-card-4 w3-quarter">
+  <div class="w3-card-4 w3-third">
     <div class="w3-container w3-purple w3-wide">
       <h3>change up that password</h3>
     </div>
@@ -90,7 +89,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     </form>
   </div>
 
-  <div class="w3-card-4 w3-quarter">
+  <div class="w3-card-4 w3-third">
   	<div class="w3-container w3-pink w3-wide">
       <h3>screen name</h3>
     </div>
@@ -110,7 +109,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   </div>
 
-  <div class="w3-card-4 w3-quarter">
+  <div class="w3-card-4 w3-third">
   	<div class="w3-container w3-teal w3-wide">
       <h3>about you</h3>
     </div>
@@ -137,27 +136,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
     </form>
 
   </div>
-  
-  <div class="w3-card-4 w3-quarter">
-  	<div class="w3-container w3-yellow w3-wide">
-      <h3>your personal pic</h3>
-    </div>
-
-    <form class="w3-container">
-
-      <p>
-      	<input id="newProfilePic" type="file" name="picture" accept="image/png, image/jpeg"></input>
-      </p>
-      <p>
-      	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-teal" onclick="updateProfile()" href="#">update profile pic</a>
-      </p>
-
-
-    </form>
-
-  </div>
 
 </div>
+<input id="newProfilePic" type="file" name="picture" accept="image/png, image/jpeg"></input>
+<button onclick="updateProfile()">Update Profile Picture</button>
 
 <!-- End Page Container -->
 </div>
@@ -226,7 +208,7 @@ function onload() {
       });
     }
     else {
-      alert("not logged in");
+      window.location.assign("https://cpi310proj.github.io/index");
     }
 
   });
@@ -241,6 +223,14 @@ function changePassword() {
       window.location.assign("https://cpi310proj.github.io/AccountSettings");
     }, function(error) {
       alert(error);
+  });
+}
+
+function logout() {
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }, function(error) {
+    // An error happened.
   });
 }
 
