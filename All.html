@@ -115,7 +115,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 function onload() {
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      var stack = new Stack();
+      var stack = new Array();
       var postRef = firebase.database().ref('posts/').orderByChild('timestamp');
       postRef.on('child_added', function(data) {
         stack.push(data);
