@@ -137,9 +137,28 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
   </div>
 
+  <div class="w3-card-4 w3-quarter">
+  	<div class="w3-container w3-yellow w3-wide">
+      <h3>your personal pic</h3>
+    </div>
+
+    <form class="w3-container">
+
+      <p>
+      	<input id="newProfilePic" type="file" name="picture" accept="image/png, image/jpeg"></input>
+      </p>
+      <p>
+      	<a class="w3-btn-block w3-wide w3-padding-large w3-black w3-hover-teal" onclick="updateProfile()" href="#">update profile pic</a>
+      </p>
+
+
+    </form>
+
+   </div>
+
 </div>
-<input id="newProfilePic" type="file" name="picture" accept="image/png, image/jpeg"></input>
-<button onclick="updateProfile()">Update Profile Picture</button>
+<!-- <input id="newProfilePic" type="file" name="picture" accept="image/png, image/jpeg"></input>
+<button onclick="updateProfile()">Update Profile Picture</button> -->
 
 <!-- End Page Container -->
 </div>
