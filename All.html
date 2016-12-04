@@ -130,7 +130,7 @@ function onload() {
 
         snapshot.forEach(function(child) {
           var p = new Post(child.val().posterId, child.val().text, child.val().timestamp, child.val().likes);
-          map.add({child.val().timestamp : p})
+          map[child.val().timestamp] = p;
         });
 
         var keys = Object.keys(map);
