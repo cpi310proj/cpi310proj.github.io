@@ -174,7 +174,7 @@ function generatePostHtml(posterId, text, timestamp, likes) {
     var source = document.getElementById("post-template").innerHTML;
     var template = Handlebars.compile(source);
     var context = {content: text, likeCount: likes, name: name, photo: photo, dateString: date};
-
+    console.log(text);
     var parent = document.getElementById("midColumn");
     parent.insertAdjacentHTML('beforeend', template(context));
   });
