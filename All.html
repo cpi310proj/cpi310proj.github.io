@@ -118,18 +118,27 @@ function onload() {
       var stack = new Array();
       var postRef = firebase.database().ref('posts/').orderByChild('timestamp');
       postRef.on('child_added', function(data) {
-        stack.push(data);
+        var post = new Post(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
+        stack.push(post);
         // generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
       });
       while(stack.length > 0) {
-        var data = stack.pop();
-        generatePostHtml(data.val().posterId, data.val().text, data.val().timestamp, data.val().likes);
+        var post = stack.pop();
+        generatePostHtml(post.posterId, post.text, post.timestamp, post.likes);
       }
     }
     else {
       window.location.assign("https://cpi310proj.github.io/index");
     }
   });
+}
+
+function Post(posterId, text, timestamp, likes) {
+  this.posterId = posterId;
+  this.text = text;
+  this.timestamp = timestamp;
+  this.likes = likes;
+  return this;
 }
 
 function logout() {
