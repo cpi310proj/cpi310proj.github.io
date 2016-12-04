@@ -65,7 +65,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 	<div class="w3-col m3 w3-center">
 	<p></p>
 	</div>
-	<div class="w3-col m6 w3-center ">
+	<div id="midColumn" class="w3-col m6 w3-center ">
 
 
       <div class="w3-row-padding">
@@ -79,7 +79,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
       </div>
 
 
-	  	<div id="midColumn" class="w3-col m3 w3-center">
+	  	<div  class="w3-col m3 w3-center">
 			<p></p>
 	</div>
     <!-- End Right Column -->
@@ -145,7 +145,7 @@ function generatePostHtml(posterId, text, timestamp, likes) {
     var context = {content: text, likeCount: likes, name: name, photo: photo, dateString: date};
 
     var parent = document.getElementById("midColumn");
-    parent.insertAdjacentHTML('afterend', template(context));
+    parent.insertAdjacentHTML('beforeend', template(context));
   });
 
 
