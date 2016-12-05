@@ -28,7 +28,7 @@
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
 </head>
-<body onload="onload()" class="w3-theme-l5">
+<body onload="onload(); randomMessage();" class="w3-theme-l5">
 
 <!-- Navbar -->
 <div class="w3-top">
@@ -79,8 +79,8 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <span onclick="this.parentElement.style.display='none'" class="w3-hover-text-grey w3-closebtn">
           <i class="fa fa-remove"></i>
         </span>
-        <p><strong>Hey!</strong></p>
-        <p>People are looking at your profile. Find out who.</p>
+        <p id="greeting"></p>
+        <p id="message"></p>
       </div>
 
     <!-- End Left Column -->
@@ -165,6 +165,49 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 
 <script>
+
+
+//random message
+function randomMessage() {
+
+	var randomNum1 = Math.floor((Math.random() * 10) + 1);
+	var randomNum2 = Math.floor((Math.random() * 10) + 1);
+	var message = document.getElementById('message');
+	var greeting = document.getElementById('greeting');
+	
+	if (randomNum1 <= 2) {
+		message.innerHTML = "What's up??";
+	}
+	else if (randomNum1 > 2 && randomNum <= 6) {
+		message.innerHTML = "Heyyyyyyy";
+	}
+	else if (randomNum1 > 6 && randomNum <= 8) {
+		message.innerHTML = "How you doin'?";
+	}
+	else if (randomNum1 > 8 && randomNum <= 10) {
+		message.innerHTML = "Welcome back to Rad Pages!";
+	}
+	else {
+		message.innerHTML = "it broke";
+	}
+	
+	if (randomNum2 <= 2) {
+		greeting.innerHTML = "Aye!";
+	}
+	else if (randomNum2 > 2 && randomNum <= 6) {
+		greeting.innerHTML = "Yo!";
+	}
+	else if (randomNum2 > 6 && randomNum <= 8) {
+		greeting.innerHTML = "'Sup";
+	}
+	else if (randomNum2 > 8 && randomNum <= 10) {
+		greeting.innerHTML = "Duuuuude,";
+	}
+	else {
+		greeting.innerHTML = "it broke";
+	}
+
+}
 // Accordion
 
 function onload() {
